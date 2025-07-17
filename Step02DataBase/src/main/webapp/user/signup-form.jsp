@@ -12,7 +12,7 @@
 		<form action="signup.jsp" method="post">
 			<div>
 				<label for="id">아이디</label>
-				<input type="text" name="id" id="id"/>
+				<input type="text" name="userName" id="id"/>
 			</div>
 			<div>
 				<label for="password">비밀번호</label>

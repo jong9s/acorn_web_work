@@ -13,18 +13,7 @@
 	</jsp:include>
 	<div class="container mt-5">
 		<div class="card shadow p-4">
-			<h1 class="text-center mb-4">📚 인덱스 페이지입니다</h1>
-			<ul class="list-unstyled d-grid gap-2 col-6 mx-auto">
-				<li>
-					<a href="${pageContext.request.contextPath }/member/list.jsp" class="btn btn-primary btn-lg">회원 목록</a>
-				</li>
-				<li>
-					<a href="${pageContext.request.contextPath }/book/list.jsp" class="btn btn-success btn-lg">책 목록</a>
-				</li>
-				<li>
-					<a href="${pageContext.request.contextPath }/user/signup-form.jsp" class="btn btn-success btn-lg">회원가입</a>
-				</li>
-			</ul>
+			<h1 class="text-center mb-4">인덱스 페이지입니다</h1>
 			<div id="carouselExampleIndicators" class="carousel slide">
 			  <div class="carousel-indicators">
 			    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
