@@ -11,8 +11,8 @@
 		<h1>회원가입 양식</h1>
 		<form action="signup.jsp" method="post">
 			<div>
-				<label for="id">아이디</label>
-				<input type="text" name="userName" id="id"/>
+				<label for="userName">아이디</label>
+				<input type="text" name="userName" id="userName"/>
 			</div>
 			<div>
 				<label for="password">비밀번호</label>
@@ -27,3 +27,10 @@
 	</div>
 </body>
 </html>
+
+
+
+
+
+
+

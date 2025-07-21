@@ -1,13 +1,13 @@
-<%@page import="test.dto.UserDto"%>
 <%@page import="test.dao.UserDao"%>
+<%@page import="test.dto.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	// 세션에 저장된 userName 을 읽어온다. (이미 로그인된 상태이기 때문에)
-	String userName = (String)session.getAttribute("userName");
-	// DB 에서 사용자 정보를 읽어온다.
-	UserDto dto = UserDao.getInstance().getByUserName(userName);
-%>
+	//세션에 저장된 userName 을 읽어온다. (이미 로그인된 상태이기 때문에)
+	String userName=(String)session.getAttribute("userName");
+	//DB 에서 사용자 정보를 읽어온다.
+	UserDto dto=UserDao.getInstance().getByUserName(userName);
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,28 +32,34 @@
 			<tr>
 				<th>이메일</th>
 				<td><%=dto.getEmail() %></td>
-			</tr>
+			</tr> 
 			<tr>
 				<th>프로필 이미지</th>
 				<td>
-					<%if(dto.getProfileImage() == null) {%>
+					<%if(dto.getProfileImage() == null){ %>
 						<i style="font-size:100px;" class="bi bi-person-circle"></i>
-					<%} else { %>
+					<%}else{ %>
 						<img src="${pageContext.request.contextPath }/upload/<%=dto.getProfileImage() %>" 
-						style="width:100px; height:100px; border-radius:50%;" />
+							style="width:100px;height:100px;border-radius:50%;"/>
 					<%} %>
 				</td>
 			</tr>
 			<tr>
 				<th>최종 수정 날짜</th>
-				<td><%=dto.getUpdateAt() %></td>
+				<td><%=dto.getUpdatedAt() %></td>
 			</tr>
 			<tr>
 				<th>가입 날짜</th>
 				<td><%=dto.getCreatedAt() %></td>
 			</tr>
 		</table>
-		<a href="edit.jsp">개인정보 수정</a>
+		<a href="edit.jsp">개인 정보 수정(이메일, 프로필사진)</a>
 	</div>
 </body>
 </html>
+
+
+
+
+
+

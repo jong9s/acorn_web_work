@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- /WEB-INF/include/footer.jsp --%>
-	<footer class="bg-success text-white py-4 mt-5">
+	<footer class="bg-primary text-white py-4 mt-5">
 	  <div class="container d-flex justify-content-between align-items-center flex-wrap">
 	    <div>
 	      <h5 class="mb-0">MyBrand</h5>

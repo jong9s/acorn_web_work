@@ -1,13 +1,14 @@
 package test.dto;
 
 public class BookDto {
+	//필드 
 	private int num;
 	private String title;
 	private String author;
-	private String pub;
-
-	public BookDto() {
-	}
+	private String publisher;
+	
+	//디폴트 생성자
+	public BookDto() {}
 
 	public int getNum() {
 		return num;
@@ -33,12 +34,15 @@ public class BookDto {
 		this.author = author;
 	}
 
-	public String getPub() {
-		return pub;
+	public String getPublisher() {
+		return publisher;
 	}
 
-	public void setPub(String pub) {
-		this.pub = pub;
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
 	}
-
+	
+	//setter, getter
+	
+	
 }

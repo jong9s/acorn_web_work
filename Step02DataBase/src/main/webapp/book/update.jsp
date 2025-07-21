@@ -3,21 +3,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	int num = Integer.parseInt(request.getParameter("num"));
-	String title = request.getParameter("title");
-	String author = request.getParameter("author");
-	String pub = request.getParameter("pub");
-	
-	BookDto dto = new BookDto();
+	//폼 전송되는 수정할 책 정보를 추출해서 
+	int num=Integer.parseInt(request.getParameter("num"));
+	String title=request.getParameter("title");
+	String author=request.getParameter("author");
+	String publisher=request.getParameter("publisher");
+	//BookDto 객체에 담고
+	BookDto dto=new BookDto();
 	dto.setNum(num);
 	dto.setTitle(title);
 	dto.setAuthor(author);
-	dto.setPub(pub);
-	
-	BookDao dao = new BookDao();
-	boolean isSuccess = dao.update(dto);
-	
-%>
+	dto.setPublisher(publisher);
+	//DB 에 수정반영하고 
+	boolean isSuccess=new BookDao().update(dto);
+%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,14 +24,32 @@
 <title>/book/update.jsp</title>
 </head>
 <body>
-		<%if(isSuccess) {%>
-			<script>
-				alert("<%=title %>수정되었습니다.");
-				location.href="${pageContext.request.contextPath }/book/list.jsp";
-			</script>
-		<%} else{ %>
-			<p>수정 실패</p>
-			<a href="${pageContext.request.contextPath }/book/updateform.jsp?num=<%=num %>">다시 수정하기</a>
-		<%} %>
+	<%-- html 응답하면서 javascript 를 로딩시키기 --%>
+	<script>
+		<%if(isSuccess){%>
+			alert("<%=title %> 책의 정보를 성공적으로 수정했습니다");
+			//javascript 를 이용해서 페이지 이동 (redirect 효과를 낼수 있다)
+			location.href="list.jsp";
+		<%}else{%>
+			alert("수정 실패!");
+			//다시 수정 폼으로 이동 시키기
+			location.href="updateform.jsp?num=<%=num %>";
+		<%}%>
+	</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
