@@ -22,6 +22,40 @@ public class BoardDao {
 	public static BoardDao getInstance() {
 		return dao;
 	}
+	// 특정 글의 조회수를 증가 시키는 메소드
+	public boolean addViewCount(int num) {
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int rowCount = 0;
+				
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = """
+					UPDATE board
+					SET viewCount = viewCount + 1
+					WHERE num = ?
+			""";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, num);
+			rowCount = psmt.executeUpdate();
+					
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (psmt != null) psmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if (rowCount > 0) {
+			return true; // 작업 성공이라는 의미에서 true 리턴하기
+		} else {
+			return false; // 작업 실패라는 의미에서 false 리턴하기
+		}
+				
+	}
 	
 	// 전체 글의 개수를 리턴하는 메소드
 	public int getCount() {
@@ -40,7 +74,7 @@ public class BoardDao {
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
-				count = rs.getInt(count);
+				count = rs.getInt("count");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -169,10 +203,8 @@ public class BoardDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
 			} catch (Exception e) {
 			}
 		}
@@ -244,9 +276,11 @@ public class BoardDao {
 			conn = new DbcpBean().getConn();
 			//실행할 sql문
 			String sql = """
-				SELECT writer, title, content, viewCount, createdAt
-				FROM board
-				WHERE num=?
+				SELECT writer, title, content, viewCount, 
+				TO_CHAR(b.createdAt, 'YY"년" MM"월" DD"일" HH24:MI') AS createdAt, profileImage
+				FROM board b
+				INNER JOIN users u ON b.writer = u.userName
+				WHERE b.num = ?
 			""";
 			pstmt = conn.prepareStatement(sql);
 			//? 에 값 바인딩
@@ -261,17 +295,15 @@ public class BoardDao {
 				dto.setContent(rs.getString("content"));
 				dto.setViewCount(rs.getInt("viewCount"));
 				dto.setCreatedAt(rs.getString("createdAt"));
+				dto.setProfileImage(rs.getString("profileImage"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
+				if (rs != null) rs.close();
+				if (pstmt != null) pstmt.close();
+				if (conn != null) conn.close();
 			} catch (Exception e) {
 			}
 		}

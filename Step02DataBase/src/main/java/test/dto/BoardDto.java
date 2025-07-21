@@ -10,9 +10,10 @@ public class BoardDto {
 	// 페이징 처리를 위한 필드
 	private int startRowNum;
 	private int endRowNum;
+	// 프로필 이미지 출력을 위한 필드
+	private String profileImage;
 
-	
-	//setter, getter
+	// setter, getter
 	public int getNum() {
 		return num;
 	}
@@ -75,6 +76,14 @@ public class BoardDto {
 
 	public void setEndRowNum(int endRowNum) {
 		this.endRowNum = endRowNum;
+	}
+
+	public String getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(String profileImage) {
+		this.profileImage = profileImage;
 	}
 
 }
