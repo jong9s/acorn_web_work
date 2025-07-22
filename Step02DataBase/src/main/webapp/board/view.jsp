@@ -90,7 +90,7 @@
 		    <strong>본문 내용</strong>
 		  </div>
 		  <div class="card-body p-1">
-		    <pre class="mb-0" style="background-color: #f8f9fa; border-radius: 5px; padding: 1rem; white-space: pre-wrap; font-family: '맑은 고딕', 'Consolas', monospace;"><%=StringEscapeUtils.escapeHtml4(dto.getContent()) %></pre>
+		    <%=dto.getContent() %>
 		  </div>
 		</div>
 		<%if(dto.getWriter().equals(userName)){ %>

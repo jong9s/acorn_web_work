@@ -56,6 +56,41 @@ public class BoardDao {
 		}
 				
 	}
+	// 검색 키워드에 부합하는 글의 개수를 리턴하는 메소드
+	public int getCountByKeyword(String keyword) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = """
+					SELECT MAX(ROWNUM) AS count
+					FROM board
+					WHERE title LIKE '%' || ? || '%' OR content LIKE '%' || ? || '%'
+					""";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, keyword);
+			psmt.setString(2, keyword);
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (psmt != null) psmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return count;
+	}
 	
 	// 전체 글의 개수를 리턴하는 메소드
 	public int getCount() {
@@ -89,7 +124,6 @@ public class BoardDao {
 		}
 		return count;
 	}
-	
 	// 특정 page 에 해당하는 row 만 select 해서 리턴하는 메소드
 	// BoardDto 객체에 startRowNum 과 endRowNum 을 담아와서 select
 	public List<BoardDto> selectPage(BoardDto dto){
@@ -130,12 +164,62 @@ public class BoardDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
-				if (psmt != null)
-					psmt.close();
-				if (conn != null)
-					conn.close();
+				if (rs != null) rs.close();
+				if (psmt != null) psmt.close();
+				if (conn != null) conn.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	// 특정 page 와 keyword 에 해당하는 row 만 select 해서 리턴하는 메소드
+	// BoardDto 객체에 startRowNum 과 endRowNum 을 담아와서 select
+	public List<BoardDto> selectPageByKeyword(BoardDto dto){
+		List<BoardDto> list = new ArrayList<>();
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = new DbcpBean().getConn();
+			String sql = """
+					SELECT * 
+					FROM
+						(SELECT result1.*, ROWNUM AS rnum
+						FROM
+							(SELECT num, writer, title, viewCount, createdAt
+							FROM board
+							WHERE title LIKE '%' || ? || '%' OR content LIKE '%' || ? || '%'
+							ORDER BY num DESC) result1)
+					WHERE rnum BETWEEN ? AND ?
+					""";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getKeyword());
+			psmt.setString(2, dto.getKeyword());
+			psmt.setInt(3, dto.getStartRowNum());
+			psmt.setInt(4, dto.getEndRowNum());
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				BoardDto dto2=new BoardDto();
+				dto2.setNum(rs.getInt("num"));
+				dto2.setWriter(rs.getString("writer"));
+				dto2.setTitle(rs.getString("title"));
+				dto2.setViewCount(rs.getInt("viewCount"));
+				dto2.setCreatedAt(rs.getString("createdAt"));
+				
+				list.add(dto2);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) rs.close();
+				if (psmt != null) psmt.close();
+				if (conn != null) conn.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
