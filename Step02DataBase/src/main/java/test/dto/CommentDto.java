@@ -1,18 +1,26 @@
 package test.dto;
 
 public class CommentDto {
-	private int num; // 댓글의 글번호
-	private String writer; // 작성자
-	private String content; // 내용
-	private String targetWriter; // 누구에게 작성한 댓글인지
-	private int groupNum; // 댓글의 그룹번호
-	private int parentNum; // 부모 글번호
-	private String deleted; // 삭제 여부 ('no', 'yes')
-	private String createdAt; // 작성일 (to_char로 포맷 가정)
-	private String profileImage;
+	private int num;
+	private String writer;
+	private String content;
+	private String targetWriter;
+	private int groupNum;
+	private int parentNum;
+	private String deleted;
+	private String createdAt;
+	private String profileImage; // 프로필 이미지를 출력하기 위한 필드
+	// 대댓글의 갯수를 저장하기 위한 필드
+	private int replyCount;
 
-	
-	// setter, getter
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+
+	public int getReplyCount() {
+		return replyCount;
+	}
+
 	public int getNum() {
 		return num;
 	}

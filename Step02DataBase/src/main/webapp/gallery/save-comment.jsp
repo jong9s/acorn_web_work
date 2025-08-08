@@ -39,5 +39,5 @@
 	// 응답한다 (리다일렉트 : 새로운 경로로 요청을 다시 하라고 응답)
 	String cPath = request.getContextPath();
 	// 원래 글 자세히 보기 페이지로 이동하라는 리다일렉트 응답
-	response.sendRedirect(cPath+"/board/view.jsp?num=" + parentNum);
+	response.sendRedirect(cPath+"/gallery/view.jsp?num=" + parentNum);
 %>
