@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>/templates/book/insert-form.html</title>
+</head>
+<body>
+	<div class="container">
+		<h1>책 추가 양식</h1>
+		<form th:action="@{/book/insert}" th:object="${book}" method="post">
+			<div>
+				<label for="title">제목</label>
+				<input type="text" th:field="*{title}" />
+			</div>
+			<div>
+				<label for="author">저자</label>
+				<input type="text" th:field="*{author}" />
+			</div>
+			<div>
+				<label for="publisher">출판사</label>
+				<input type="text" th:field="*{publisher}" />
+			</div>
+			<button type="submit">등록</button>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>/templates/book/update.html</title>
+</head>
+<body>
+	<script th:inline="javascript">
+		alert(/*[[${param.num} + '번 책을 수정했습니다']]*/ "");
+		location.href = /*[[@{/book/list}]]*/ "";
+	</script>
+</body>
+</html>

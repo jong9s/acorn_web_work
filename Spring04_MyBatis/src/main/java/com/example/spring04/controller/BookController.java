@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.spring04.dto.BookDto;
@@ -18,7 +19,7 @@ public class BookController {
 	private final BookService service;
 	
 	@PostMapping("/book/update")
-	public String update(BookDto dto) {
+	public String update(@ModelAttribute("dto") BookDto dto) {
 		service.updateBook(dto);
 		
 		return "book/update";
@@ -40,14 +41,16 @@ public class BookController {
 	}
 	
 	@PostMapping("/book/insert")
-	public String insert(BookDto dto) {
+	public String insert(@ModelAttribute BookDto dto) {
 		service.addBook(dto);
 		
 		return "redirect:/book/list";
 	}
 	
 	@GetMapping("/book/insert-form")
-	public String insertform() {
+	public String insertform(Model model) {
+		model.addAttribute("book", new BookDto());
+		
 		return "book/insert-form";
 	}
 	
